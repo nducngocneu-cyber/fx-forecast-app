@@ -1,0 +1,11 @@
+# Runtime dependencies (installed by Streamlit Community Cloud)
+streamlit>=1.50
+pandas>=2.2
+numpy>=1.26
+scipy>=1.11
+statsmodels>=0.14.2
+scikit-learn>=1.5
+plotly>=5.24
+yfinance>=0.2.54
+duckdb>=1.1
+requests>=2.31

@@ -1,0 +1,5 @@
+# Extra tools for the notebook and tests (not needed on Streamlit Cloud)
+-r requirements.txt
+pytest>=8.0
+matplotlib>=3.8
+jupyter>=1.0
