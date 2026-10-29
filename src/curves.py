@@ -90,17 +90,20 @@ class _CouponGrid:
         self.T = np.atleast_1d(np.asarray(maturities, float))
         self.freq = freq
         self.is_bill = self.T <= 1 / freq + 1e-9
-        times, starts = [], []
+        times, starts, accrued = [], [], []
         for T, bill in zip(self.T, self.is_bill):
             starts.append(len(times))
             if bill:
                 times.append(T)
+                accrued.append(0.0)
             else:
-                n = int(round(T * freq))
+                n = int(np.ceil(T * freq - 1e-9))         # a short first period counts as a coupon date
                 tt = T - np.arange(n)[::-1] / freq      # coupon dates counted back from maturity
-                times.extend(tt[tt > 1e-9])
+                times.extend(tt)
+                accrued.append(1 - tt[0] * freq)        # fraction of the first coupon already accrued
         self.times = np.array(times)
         self.starts = np.array(starts)
+        self.accrued = np.array(accrued)
         self.last = np.r_[self.starts[1:], len(self.times)] - 1
 
     def par(self, df_func) -> np.ndarray:
@@ -108,7 +111,7 @@ class _CouponGrid:
         annuity = np.add.reduceat(d, self.starts)
         d_last = d[self.last]
         f = self.freq
-        out = f * (1 - d_last) / annuity
+        out = f * (1 - d_last) / (annuity - self.accrued)   # clean price 100 at settlement
         bill = f * (d_last ** (-1 / (f * self.T)) - 1)
         return np.where(self.is_bill, bill, out) * 100
 
