@@ -44,9 +44,9 @@ def forecast_figure(history: pd.Series, forecasts: dict[str, pd.DataFrame],
     for name, fc in forecasts.items():
         c = COLORS.get(name, "#10b981")
         x = [anchor_x, *fc.index]
-        fig.add_trace(go.Scatter(x=x, y=[anchor_y, *fc["upper"]], line=dict(width=0),
+        fig.add_trace(go.Scatter(x=x, y=[anchor_y, *fc["upper"]], mode="lines", line=dict(width=0),
                                  showlegend=False, hoverinfo="skip", legendgroup=name))
-        fig.add_trace(go.Scatter(x=x, y=[anchor_y, *fc["lower"]], line=dict(width=0),
+        fig.add_trace(go.Scatter(x=x, y=[anchor_y, *fc["lower"]], mode="lines", line=dict(width=0),
                                  fill="tonexty", fillcolor=_rgba(c, _BAND_ALPHA),
                                  name=f"{name} {level:.0%} band", legendgroup=name,
                                  hoverinfo="skip", showlegend=False))

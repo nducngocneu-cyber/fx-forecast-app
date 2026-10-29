@@ -73,8 +73,8 @@ def curve_forecast_figure(current: pd.Series, fc: pd.DataFrame, model: str, h: i
     rw = fc[fc["model"] == "Random walk"]
     c = MODEL_COLORS.get(model, BLUE)
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=g["tenor"], y=g["upper"], line=dict(width=0), showlegend=False, hoverinfo="skip"))
-    fig.add_trace(go.Scatter(x=g["tenor"], y=g["lower"], line=dict(width=0), fill="tonexty",
+    fig.add_trace(go.Scatter(x=g["tenor"], y=g["upper"], mode="lines", line=dict(width=0), showlegend=False, hoverinfo="skip"))
+    fig.add_trace(go.Scatter(x=g["tenor"], y=g["lower"], mode="lines", line=dict(width=0), fill="tonexty",
                              fillcolor=_rgba(c, 0.14), name="Prediction band", hoverinfo="skip"))
     fig.add_trace(go.Scatter(x=current.index, y=current.values, name=f"Latest ({current.name:%b %Y})",
                              mode="lines+markers", line=dict(color=INK, width=2), marker=dict(size=8),
