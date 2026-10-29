@@ -26,3 +26,19 @@ and tests; the app labels it clearly whenever it is used.
 | `us_treasury_daily.csv` | US Treasury constant-maturity yields (FRED series DGS1MO … DGS30) and SOFR, daily, percent. |
 
 Refresh both with `python -m scripts.refresh_rates`.
+
+## Interbank snapshot
+
+| File | Content |
+|---|---|
+| `sbv_interbank_daily.csv` | State Bank of Vietnam daily average interbank rates (% a year) and turnover (billion VND) for overnight, 1W, 2W, 1M, 3M, 6M and 9M, 2 Jan 2014 – 28 Oct 2026, one row per reporting day. Columns `{tenor}_rate`, `{tenor}_volume`, `{tenor}_carried`. Values are stored exactly as SBV publishes them (decimal comma in rates); `{tenor}_carried = 1` marks days on which SBV repeated an earlier figure because the tenor did not trade. |
+
+Cleaning, in `src/interbank.load_interbank` (nothing is edited in the file):
+
+- carried-over values are excluded from all statistics (281 tenor-days);
+- a rate above 30% is impossible and is excluded; a day with two or more such values is
+  treated as scrambled and every tenor of it is excluded (3 days: 22 Sep 2015, 16 Nov 2015, 6 Jan 2016);
+- a turnover figure containing a comma is ambiguous (`0,5` could be 0.5 bn, `432,24` is probably
+  432,240 bn) and is left blank rather than guessed (76 values).
+
+The file was downloaded from SBV's public website through a web browser and is refreshed by hand.
