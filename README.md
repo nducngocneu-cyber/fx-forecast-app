@@ -245,4 +245,4 @@ Svensson, L.E.O. (1994) 'Estimating and interpreting forward interest rates: Swe
 ---
 
 **Disclaimer:** educational portfolio project; not investment advice.
-**Author:** Nguyen Duc Ngoc · [LinkedIn](https://www.linkedin.com/in/<your-profile>)
+**Author:** Nguyen Duc Ngoc
