@@ -1,6 +1,6 @@
 # Treasury Analytics Lab – USD/VND and VND rates
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://YOUR-APP-NAME.streamlit.app)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://usdvnd-treasury-lab.streamlit.app)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -16,7 +16,7 @@ Vietnamese and US market data:
 | **Portfolio optimisation** | VND government bond mix maximising carry + roll-down for a given curve risk, under weight and duration limits; efficient frontier; stress tests incl. the worst historical 12-month move | Bond portfolio |
 | **Data / SQL** | All sources cleaned once and loaded into an in-memory DuckDB warehouse; cross-dataset analysis (spreads, month-end alignment, rolling volatility, UIP check) written in SQL in `sql/` | SQL warehouse |
 
-**Live demo:** https://YOUR-APP-NAME.streamlit.app  ← *replace after deploying (section 9)*
+**Live demo:** https://usdvnd-treasury-lab.streamlit.app
 
 <!-- After deploying, add a screenshot as docs/screenshot.png and uncomment:
 ![App screenshot](docs/screenshot.png)
