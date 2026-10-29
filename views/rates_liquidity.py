@@ -96,8 +96,8 @@ with tab_liq:
         from views._liquidity_section import render_liquidity
         render_liquidity()
     except (FileNotFoundError, ImportError):
-        st.info("Interbank data snapshot not found. Run `python -m scripts.fetch_interbank` to download "
-                "the State Bank of Vietnam's daily interbank rates and volumes.")
+        st.info("Interbank data snapshot `data/sbv_interbank_daily.csv` not found. See `data/README.md` "
+                "for the source (State Bank of Vietnam daily interbank rates and volumes) and file layout.")
 
 # --------------------------------------------------------------------------- data
 with tab_data:

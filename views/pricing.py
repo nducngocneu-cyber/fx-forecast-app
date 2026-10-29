@@ -111,7 +111,8 @@ with tab_fwd:
     try:
         from src.interbank import latest_interbank_curve
         ib_date, ib_rates = latest_interbank_curve()
-        usd_mm = {k: float(cu.par_yield([d / 365], 2)[0]) for k, d in tenor_days.items()}
+        # USD money-market rate (simple, ACT/360) with the same discount factor as the Treasury curve
+        usd_mm = {k: float((1 / cu.df(np.array([d / 365]))[0] - 1) * 360 / d * 100) for k, d in tenor_days.items()}
         vnd_mm = {k: ib_rates.get(k) for k in tenor_days}
         mm = [cip_forward_money_market(spot, d, vnd_mm[k], usd_mm[k]) - spot if vnd_mm[k] is not None else np.nan
               for k, d in tenor_days.items()]
@@ -129,7 +130,8 @@ with tab_fwd:
         "end, so parity puts USD/VND forwards *below* spot. Interbank VND rates are higher than "
         "government yields (they carry bank credit and liquidity premia), which pushes forward points up. "
         "Dealers price FX forwards off money-market and FX-swap curves, so the interbank line is the "
-        "closer proxy; neither line has been checked against traded forward quotes. VBMA publishes no "
+        "closer proxy (each interbank tenor is its volume-weighted average over the last five reporting days, "
+        "because the 6M and 9M tenors trade thinly); neither line has been checked against traded forward quotes. VBMA publishes no "
         "VND government tenor below one year, so the government line below 1Y uses the extrapolated curve."
         + ("" if ib is not None else " *Interbank data is not loaded in this build.*")
     )
